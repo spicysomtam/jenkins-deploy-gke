@@ -21,7 +21,7 @@ pipeline {
     )
 
     string (name: 'zone', defaultValue : 'europe-west4-c', description: "gcp zone.")
-    string (name: 'gke_version', defaultValue : '1.20.5-gke.2000', description: "gke version.")
+    string (name: 'gke_version', defaultValue : '1.20.8-gke.2100', description: "gke version.")
  }
 
  
