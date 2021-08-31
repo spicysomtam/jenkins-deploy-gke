@@ -47,7 +47,9 @@ pipeline {
             """
 
             // Get the project from the sa 
-            project = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
+            p = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
+            p = (p.split('@'))[1]
+            project = (p.split("\\."))[0]
             echo project
           }
         }
