@@ -56,15 +56,15 @@ pipeline {
       }
       steps {
         script {
-          input "Create gke cluster \"${params.cluster}\" in gcp?" 
-          sh '''
+          input "Create gke cluster \"${params.cluster}\"?" 
+          sh """
             gcloud container clusters create "${params.cluster}" \
               --zone "${params.zone}" \
               --cluster-version "${params.gke_version}" \
               --release-channel "rapid" \
               --machine-type "${params.machine_type}" \
               --num-nodes "${params.num_workers}"
-          '''
+          """
         }
       }
     }
@@ -75,7 +75,7 @@ pipeline {
       }
       steps {
         script {
-          input "Delete gke cluster \"${params.cluster}\" in gcp?" 
+          input "Delete gke cluster \"${params.cluster}\"?" 
           sh '''
             gcloud container clusters delete "${params.cluster}" --zone ${params.zone}
           `'''
