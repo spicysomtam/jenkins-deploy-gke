@@ -85,9 +85,7 @@ pipeline {
       steps {
         script {
           input "Delete gke cluster ${params.cluster}?" 
-          sh '''
-            gcloud container clusters delete "${params.cluster}" --zone ${params.zone}
-          `'''
+          sh "gcloud container clusters delete ${params.cluster} --zone ${params.zone}"
         }
       }
     }
