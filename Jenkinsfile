@@ -50,7 +50,9 @@ pipeline {
             p = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
             p = (p.split('@'))[1]
             project = (p.split("\\."))[0]
-            echo project
+
+            // Then set the project
+            sh "gcloud config set project ${project}"
           }
         }
       }
