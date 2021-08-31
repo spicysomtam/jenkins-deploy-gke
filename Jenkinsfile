@@ -15,7 +15,7 @@ pipeline {
     credentials (
       name: 'service_account', 
       credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.FileCredentialsImpl',
-      defaultValue: '', 
+      defaultValue: 'jenkins-gce.json', 
       description: 'gcloud service account', 
       required: true
     )
@@ -46,7 +46,7 @@ pipeline {
               gcloud auth activate-service-account --key-file=${GC_KEY}
             """
 
-            // Get the project from the sa 
+            echo "Getting the gcp project from the service account and setting it..."
             p = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
             p = (p.split('@'))[1]
             project = (p.split("\\."))[0]
