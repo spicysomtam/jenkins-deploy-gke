@@ -38,7 +38,7 @@ pipeline {
         tool name: 'latest', type: 'gcloud'
         script {
           cluster = params.cluster
-          currentBuild.displayName = "#" + env.BUILD_NUMBER + " " + params.action + " gke" + cluster.capitalize()
+          currentBuild.displayName = "#" + env.BUILD_NUMBER + " " + params.action + " cluster " + cluster
 
           withCredentials([file(credentialsId: params.service_account, variable: 'GC_KEY')]) {
             sh """
