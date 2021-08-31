@@ -45,6 +45,10 @@ pipeline {
               gcloud version
               gcloud auth activate-service-account --key-file=${GC_KEY}
             """
+
+            // Get the project from the sa 
+            project = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
+            echo project
           }
         }
       }
@@ -65,6 +69,7 @@ pipeline {
               --machine-type "${params.machine_type}" \
               --num-nodes "${params.num_workers}"
           """
+
         }
       }
     }
