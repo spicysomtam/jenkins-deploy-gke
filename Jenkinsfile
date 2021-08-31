@@ -8,9 +8,11 @@ pipeline {
  
  parameters {
     choice (name: 'action', choices: 'create\ndestroy', description: 'Create/update or destroy the gke cluster.')
-    string (name: 'cluster', defaultValue : 'demo', description: "gke cluster name;eg demo creates cluster named eks-demo.")
-    string (name: 'machine_type', defaultValue : 'g1-small', description: "worker node machine type.")
-    string (name: 'num_workers', defaultValue : '1', description: "k8s number of worker instances.")
+    string (name: 'cluster', defaultValue : 'demo', description: "gke cluster name.")
+    string (name: 'gke_version', defaultValue : '1.20.8-gke.2100', description: "gke version.")
+    string (name: 'machine_type', defaultValue : 'e2-medium', description: "node machine type.")
+    string (name: 'num_nodes', defaultValue : '2', description: "Number of gke nodes.")
+    string (name: 'region', defaultValue : 'europe-west4', description: "gcp region.")
 
     credentials (
       name: 'service_account', 
@@ -19,9 +21,6 @@ pipeline {
       description: 'gcloud service account', 
       required: true
     )
-
-    string (name: 'zone', defaultValue : 'europe-west4-c', description: "gcp zone.")
-    string (name: 'gke_version', defaultValue : '1.20.8-gke.2100', description: "gke version.")
  }
 
  
@@ -45,15 +44,15 @@ pipeline {
               gcloud version
               gcloud auth activate-service-account --key-file=${GC_KEY}
             """
-
-            echo "Getting the gcp project from the service account and setting it..."
-            p = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
-            p = (p.split('@'))[1]
-            project = (p.split("\\."))[0]
-
-            // Then set the project
-            sh "gcloud config set project ${project}"
           }
+
+          echo "Getting the gcp project from the service account and setting it..."
+          p = sh(returnStdout: true, script: "gcloud info --format='value(config.account)'").trim()
+          p = (p.split('@'))[1]
+          project = (p.split("\\."))[0]
+
+          // Then set the project
+          sh "gcloud config set project ${project}"
         }
       }
     }
@@ -67,11 +66,11 @@ pipeline {
           input "Create gke cluster ${params.cluster}?" 
           sh """
             gcloud container clusters create "${params.cluster}" \
-              --zone "${params.zone}" \
+              --region "${params.region}" \
               --cluster-version "${params.gke_version}" \
               --release-channel "rapid" \
               --machine-type "${params.machine_type}" \
-              --num-nodes "${params.num_workers}"
+              --num-nodes "${params.num_nodes}"
           """
 
         }
@@ -85,7 +84,7 @@ pipeline {
       steps {
         script {
           input "Delete gke cluster ${params.cluster}?" 
-          sh "gcloud container clusters delete ${params.cluster} --zone ${params.zone} --quiet"
+          sh "gcloud container clusters delete ${params.cluster} --region ${params.region} --quiet"
         }
       }
     }
