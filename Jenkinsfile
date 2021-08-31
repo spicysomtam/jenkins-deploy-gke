@@ -15,7 +15,7 @@ pipeline {
     credentials (
       name: 'service_account', 
       credentialType: 'org.jenkinsci.plugins.plaincredentials.impl.FileCredentialsImpl',
-      defaultValue: 'jenkins-gce.json', 
+      defaultValue: '', 
       description: 'gcloud service account', 
       required: true
     )
@@ -85,7 +85,7 @@ pipeline {
       steps {
         script {
           input "Delete gke cluster ${params.cluster}?" 
-          sh "gcloud container clusters delete ${params.cluster} --zone ${params.zone}"
+          sh "gcloud container clusters delete ${params.cluster} --zone ${params.zone} --quiet"
         }
       }
     }
