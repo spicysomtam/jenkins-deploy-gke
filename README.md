@@ -79,13 +79,13 @@ gcloud container clusters get-credentials demo --region europe-west4
 Then confirm you can see everything deployed in the cluster:
 
 ```
+kubectl config get-contexts
+CURRENT   NAME                                         CLUSTER                                      AUTHINFO                                     NAMESPACE
+*         gke_annular-haven-312209_europe-west4_demo   gke_annular-haven-312209_europe-west4_demo   gke_annular-haven-312209_europe-west4_demo   
 kubectl get all -A
 ```
 
 Check the nodes deployed:
-
 ```
 kubectl get nodes
-NAME                       STATUS    ROLES     AGE       VERSION
-aks-nodepool1-26648723-0   Ready     agent     27m       v1.9.11
 ```

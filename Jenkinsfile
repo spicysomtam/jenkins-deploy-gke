@@ -11,7 +11,7 @@ pipeline {
     string (name: 'cluster', defaultValue : 'demo', description: "gke cluster name.")
     string (name: 'gke_version', defaultValue : '1.20.8-gke.2100', description: "gke version.")
     string (name: 'machine_type', defaultValue : 'e2-medium', description: "node machine type.")
-    string (name: 'num_nodes', defaultValue : '2', description: "Number of gke nodes.")
+    string (name: 'num_nodes', defaultValue : '1', description: "Number of gke nodes to be created per zone.")
     string (name: 'region', defaultValue : 'europe-west4', description: "gcp region.")
 
     credentials (
