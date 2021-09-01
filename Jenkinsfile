@@ -68,7 +68,6 @@ pipeline {
             gcloud container clusters create "${params.cluster}" \
               --region "${params.region}" \
               --cluster-version "${params.gke_version}" \
-              --release-channel "rapid" \
               --machine-type "${params.machine_type}" \
               --num-nodes "${params.num_nodes}"
           """
