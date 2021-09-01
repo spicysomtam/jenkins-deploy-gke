@@ -73,7 +73,7 @@ As mentioned above, a credential using a service account key (Secret file) is re
 Use the following to get your kube config (cluster name is the name specified via the Jenkins paramater; eg `demo`):
 
 ```
-gcloud container cluster get-credentials <name>
+gcloud container clusters get-credentials demo --region europe-west4
 ```
 
 Then confirm you can see everything deployed in the cluster:
