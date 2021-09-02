@@ -70,7 +70,7 @@ As mentioned above, a credential using a service account key (Secret file) is re
 
 `kubectl` is the kubernetes client. You should be able to install it via your package manager on your operating system.
 
-Use the following to get your kube config (cluster name is the name specified via the Jenkins paramater; eg `demo`):
+Use the following to get your kube config (cluster name is the name specified via the Jenkins parameter; eg `demo`):
 
 ```
 gcloud container clusters get-credentials demo --region europe-west4
